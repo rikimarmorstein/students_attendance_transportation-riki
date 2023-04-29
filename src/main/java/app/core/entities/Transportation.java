@@ -1,5 +1,5 @@
 package app.core.entities;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,24 +10,17 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Table(name = "teachers")
+@Table(name = "transportation")
 @ToString(exclude = "students")
 @Builder
-public class Teacher {
+public class Transportation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private int id;
     @Column(nullable = false)
-    private String firstName;
-    @Column(nullable = false)
-    private String lastName;
-    @Column(nullable = false, unique = true)
-    private String phone;
-    private int numClass;
-    @Column(nullable = false)
-    private String password;
-    @JsonIgnore
+    private int numBus;
     @OneToMany(mappedBy = "student")
     private List<Student> students;
 }

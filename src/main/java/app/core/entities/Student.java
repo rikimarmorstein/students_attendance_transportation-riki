@@ -2,7 +2,7 @@ package app.core.entities;
 import lombok.*;
 
 import javax.persistence.*;
-
+//ghjgjk
 @Entity
 @Data
 @AllArgsConstructor

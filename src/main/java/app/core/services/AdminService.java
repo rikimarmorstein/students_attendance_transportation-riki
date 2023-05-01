@@ -97,6 +97,7 @@ if(teacherRepo.existsByPhone(teacher.getPhone())){
     public void isStudentTravel(int idStudent){
         studentRepo.isTravel(idStudent);
     }
+
     public void whatCause(String cause ,int idStudent){
         studentRepo.whatCause(cause ,idStudent);
     }

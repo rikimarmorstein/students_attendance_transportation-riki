@@ -16,11 +16,13 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private int id;
+    @Column(nullable = false, unique = true)
+    private String studentId;
     @Column(nullable = false)
     private String firstName;
     @Column(nullable = false)
     private String lastName;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String phone;
     private int numClass;
     @Column(nullable = false)

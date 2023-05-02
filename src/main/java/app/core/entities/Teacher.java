@@ -29,5 +29,5 @@ public class Teacher {
     private String password;
     @JsonIgnore
     @OneToMany(mappedBy = "student")
-    private List<Student> students;
+    private List<Student> students;///
 }

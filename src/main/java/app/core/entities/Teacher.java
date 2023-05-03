@@ -16,7 +16,6 @@ import java.util.List;
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false)
     private int id;
     @Column(nullable = false)
     private String firstName;
@@ -27,7 +26,7 @@ public class Teacher {
     private int numClass;
     @Column(nullable = false)
     private String password;
-    @JsonIgnore
-    @OneToMany(mappedBy = "student")
-    private List<Student> students;///
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "student")
+//    private List<Student> students;///
 }

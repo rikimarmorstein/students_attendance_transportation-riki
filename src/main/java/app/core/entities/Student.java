@@ -14,7 +14,6 @@ import javax.persistence.*;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false)
     private int id;
     @Column(nullable = false, unique = true)
     private String studentId;
@@ -25,21 +24,23 @@ public class Student {
     @Column(nullable = false)
     private String phone;
     private int numClass;
+    @ManyToOne
+    @JoinColumn(name="school_id")
+    private School school;
     @Column(nullable = false)
     private boolean isTravel;
     private Cause cause;
     @Column(nullable = false)
     private String pickupAddress;
-    @Column(nullable = false)
     @ManyToOne
     @JoinColumn(name = "bus_id")
     private Transportation numBus;
     @Column(nullable = false)
     private Hour hour;
     private String remark;
-    @ManyToOne
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
+//    @ManyToOne
+//    @JoinColumn(name = "teacher_id")
+//    private Teacher teacher;
 
     public  enum  Hour{
         THIRTEEN, SIXTEEN;

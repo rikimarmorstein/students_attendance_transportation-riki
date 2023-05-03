@@ -33,7 +33,7 @@ public class AdminController {
     adminService.updateSchool(school, user.getId());
     }
 
-@DeleteMapping(headers = { HttpHeaders.AUTHORIZATION })
+@DeleteMapping(path = "school/{schoolId}", headers = { HttpHeaders.AUTHORIZATION })
     public void deleteSchool(@PathVariable int schoolId, HttpServletRequest req) throws SystemException {
     UserCredentials user = (UserCredentials) req.getAttribute("user");
     adminService.deleteSchool(schoolId, user.getId());
@@ -45,8 +45,8 @@ public class AdminController {
        return adminService.getAllSchools(user.getId());
     }
 
-    @GetMapping(path = "one-school",headers = { HttpHeaders.AUTHORIZATION } )
-    public School getOneSchool(int schoolId, HttpServletRequest req) throws SystemException {
+    @GetMapping(path = "one-school/{schoolId}",headers = { HttpHeaders.AUTHORIZATION } )
+    public School getOneSchool(@PathVariable int schoolId, HttpServletRequest req) throws SystemException {
         UserCredentials user = (UserCredentials) req.getAttribute("user");
         return adminService.getOneSchool(schoolId, user.getId());
     }

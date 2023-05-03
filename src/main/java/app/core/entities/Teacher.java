@@ -26,7 +26,18 @@ public class Teacher {
     private int numClass;
     @Column(nullable = false)
     private String password;
+    private Day day;
+
+    @JsonIgnore
+    @OneToOne
+    @JoinTable(name = "transportation_teachers", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "transportation_id"))
+    private Transportation transportation ;
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "student")
 //    private List<Student> students;///
+
+    public enum Day{
+
+    }
+
 }

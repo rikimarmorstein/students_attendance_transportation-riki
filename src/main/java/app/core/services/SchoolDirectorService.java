@@ -1,16 +1,20 @@
 package app.core.services;
 
+import app.core.auth.UserCredentials;
 import app.core.entities.School;
 import app.core.entities.Student;
 import app.core.entities.Teacher;
 import app.core.exception.SystemException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+@Service
+@Transactional
 public class SchoolDirectorService extends ClientService{
 
     @Override
-    public String login() {
+    public String login(UserCredentials userCredentials) {
 
         return null;
     }

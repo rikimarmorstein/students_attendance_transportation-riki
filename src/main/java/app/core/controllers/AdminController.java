@@ -18,7 +18,7 @@ public class AdminController {
 
 @Autowired
     private AdminService adminService;
-
+    //controller
 
     @PostMapping(headers = { HttpHeaders.AUTHORIZATION })
     @ResponseStatus(HttpStatus.CREATED)

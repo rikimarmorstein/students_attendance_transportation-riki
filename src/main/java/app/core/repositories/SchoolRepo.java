@@ -7,5 +7,7 @@ public interface SchoolRepo extends JpaRepository<School, Integer> {
 
     boolean existsBySchoolName(String schoolName);
     boolean existsByPhone(String phone);
+    boolean existsByPhoneAndPassword(String phone, String password);
+    School findByPhoneAndPassword(String phone, String password);
 
 }

@@ -1,23 +1,35 @@
 package app.core.services;
 
+import app.core.auth.JwtUtil;
 import app.core.auth.UserCredentials;
 import app.core.entities.School;
 import app.core.entities.Student;
 import app.core.entities.Teacher;
 import app.core.exception.SystemException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.security.auth.login.LoginException;
 import java.util.List;
 @Service
 @Transactional
 public class SchoolDirectorService extends ClientService{
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Override
-    public String login(UserCredentials userCredentials) {
-
-        return null;
+    public String login(UserCredentials userCredentials) throws LoginException {
+        if (schoolRepo.existsByPhoneAndPassword(userCredentials.getPhone(), userCredentials.getPassword())) {
+            School school = schoolRepo.findByPhoneAndPassword(userCredentials.getPhone(),
+                    userCredentials.getPassword());
+            userCredentials.setId(school.getId());
+            userCredentials.setName(school.getSchoolName());
+            return this.jwtUtil.generateToken(userCredentials);
+        }
+        throw new LoginException("טלפון וסיסמא שגויים!");
     }
+
 
     public void updateSchool(School school) throws SystemException {
         School schoolFromData = schoolRepo.findById(school.getId()).orElseThrow(()->new SystemException("בית ספר זה לא קיים במערכת"));

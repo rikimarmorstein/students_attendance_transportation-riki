@@ -38,6 +38,8 @@ public class Student {
     @Column(nullable = false)
     private Hour hour;
     private String remark;
+    @Column(nullable = false)
+    private String password;
 //    @ManyToOne
 //    @JoinColumn(name = "teacher_id")
 //    private Teacher teacher;

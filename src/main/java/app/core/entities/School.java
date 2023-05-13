@@ -25,7 +25,9 @@ public class School {
     private String address;
     @Column(nullable = false, unique = true)
     private String phone;
-    @JsonIgnore
+    @Column(nullable = false)
+    private String password;
+        @JsonIgnore
     @OneToMany(mappedBy = "school", cascade = CascadeType.ALL)
     private List<Student> students;
 }

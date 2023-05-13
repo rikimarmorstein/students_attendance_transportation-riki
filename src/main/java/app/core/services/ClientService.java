@@ -7,6 +7,8 @@ import app.core.repositories.StudentRepo;
 import app.core.repositories.TeacherRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.security.auth.login.LoginException;
+
 public abstract class ClientService {
     @Autowired
     protected StudentRepo studentRepo;
@@ -14,5 +16,5 @@ public abstract class ClientService {
     protected TeacherRepo teacherRepo;
     @Autowired
     protected SchoolRepo schoolRepo;
-    public abstract String login(UserCredentials userCredentials) throws SystemException ;
+    public abstract String login(UserCredentials userCredentials) throws SystemException, LoginException;
 }

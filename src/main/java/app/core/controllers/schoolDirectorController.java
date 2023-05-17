@@ -3,6 +3,7 @@ package app.core.controllers;
 import app.core.auth.UserCredentials;
 import app.core.entities.School;
 import app.core.entities.Student;
+import app.core.entities.Teacher;
 import app.core.exception.SystemException;
 import app.core.services.AdminService;
 import app.core.services.SchoolDirectorService;
@@ -20,12 +21,19 @@ public class schoolDirectorController {
     @Autowired
     private SchoolDirectorService schoolDirectorService ;
 
-    @PostMapping(headers = { HttpHeaders.AUTHORIZATION })
+    @PostMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "student")
     @ResponseStatus(HttpStatus.CREATED)
     public void addStudent(@RequestBody Student student, HttpServletRequest req) throws SystemException {
         UserCredentials user = (UserCredentials) req.getAttribute("user");
         student.setId(user.getId());
         schoolDirectorService.addStudent(student);
+    }
+    @PostMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "teacher")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addStudent(@RequestBody Teacher teacher, HttpServletRequest req) throws SystemException {
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        teacher.setId(user.getId());
+        schoolDirectorService.addTeacher(teacher);
     }
 
 }

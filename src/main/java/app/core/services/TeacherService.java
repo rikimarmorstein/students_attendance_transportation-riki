@@ -41,7 +41,8 @@ public class TeacherService extends  ClientService{
       return  this.studentRepo.findById(studentId).orElseThrow(() ->new SystemException("התלמיד אינו קיים במערכת"));
     }
 
-//    public boolean isStudentTravel (int studentId){
-//        return  this.studentRepo.isTravel(studentId);
-//    }
+    public boolean isStudentTravel (int studentId) throws SystemException {
+        Student studentFromDb = this.studentRepo.findById(studentId).orElseThrow(() -> new SystemException("התלמיד אינו קיים במערכת"));
+        return studentFromDb.isTravel();
+    }
 }

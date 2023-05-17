@@ -1,5 +1,6 @@
 package app.core.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class Transportation {
     private int id;
     @Column(nullable = false)
     private int numBus;
+    @JsonIgnore
     @OneToMany(mappedBy = "numBus")
     private List<Student> students;
 }

@@ -20,14 +20,14 @@ public class AdminController {
     private AdminService adminService;
     //controller
 
-    @PostMapping(headers = { HttpHeaders.AUTHORIZATION })
+    @PostMapping(headers = { HttpHeaders.AUTHORIZATION },path = "school")
     @ResponseStatus(HttpStatus.CREATED)
     public void addSchool(@RequestBody School school, HttpServletRequest req) throws SystemException {
         UserCredentials user = (UserCredentials) req.getAttribute("user");
         adminService.addSchool(school, user.getId());
     }
 
-@PutMapping(headers = { HttpHeaders.AUTHORIZATION })
+@PutMapping(headers = { HttpHeaders.AUTHORIZATION },path = "school")
     public void updateSchool(@RequestBody School school, HttpServletRequest req) throws SystemException {
     UserCredentials user = (UserCredentials) req.getAttribute("user");
     adminService.updateSchool(school, user.getId());

@@ -37,6 +37,13 @@ public class TeacherService extends  ClientService{
     public List<Student> getAllStudentsByClass (int numClass, int schoolId){
       return  this.studentRepo.findAllByNumClassAndSchoolId(numClass, schoolId);
     }
+
+    public List<Student> getAllStudentsToTravel(int schoolId){
+        return this.studentRepo.findAllBySchoolIdAndIsTravelTrue(schoolId);
+    }
+    public List<Student> getAllStudentsToTravelByBus(int schoolId, int numBus){
+        return this.studentRepo.findAllBySchoolIdAndNumBusIdAndIsTravelTrue(schoolId, numBus);
+    }
     public Student getOneStudent (int studentId) throws SystemException {
       return  this.studentRepo.findById(studentId).orElseThrow(() ->new SystemException("התלמיד אינו קיים במערכת"));
     }

@@ -9,10 +9,7 @@ import app.core.repositories.TeacherRepo;
 import app.core.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -34,5 +31,26 @@ public class TeacherController {
       School school=  teacher.getSchool();
     return this.teacherService.getAllStudents(school.getId());
     }
-
+    @GetMapping(path = "all-students/{numClass}",headers = { HttpHeaders.AUTHORIZATION } )
+    public List<Student> getAllStudentsByClass (@PathVariable int numClass, HttpServletRequest req) throws SystemException {
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        Teacher teacher = teacherRepo.findById(user.getId()).orElseThrow(() -> new SystemException("המורה לא קיים/ת במערכת"));
+        School school=  teacher.getSchool();
+        return this.teacherService.getAllStudentsByClass(numClass, school.getId());
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

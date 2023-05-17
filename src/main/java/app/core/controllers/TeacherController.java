@@ -58,6 +58,10 @@ public class TeacherController {
     public Student getOneStudent (@PathVariable int studentId) throws SystemException{
         return this.teacherService.getOneStudent(studentId);
     }
+    @GetMapping(path = "isStudentTravel",headers = { HttpHeaders.AUTHORIZATION } )
+    public boolean isStudentTravel (int studentId) throws SystemException {
+        return this.teacherService.isStudentTravel(studentId);
+    }
 }
 
 

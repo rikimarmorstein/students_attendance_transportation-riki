@@ -39,12 +39,20 @@ public class TeacherController {
         return this.teacherService.getAllStudentsByClass(numClass, school.getId());
     }
 
-        @GetMapping(path = "all-students/isTravel",headers = { HttpHeaders.AUTHORIZATION } )
+
+    @GetMapping(path = "all-students/isTravel",headers = { HttpHeaders.AUTHORIZATION } )
     public List<Student> getAllStudentsToTravel(HttpServletRequest req) throws SystemException {
-            UserCredentials user = (UserCredentials) req.getAttribute("user");
-            Teacher teacher = teacherRepo.findById(user.getId()).orElseThrow(() -> new SystemException("המורה לא קיים/ת במערכת"));
-            School school=  teacher.getSchool();
-            return this.teacherService.getAllStudentsToTravel(school.getId());
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        Teacher teacher = teacherRepo.findById(user.getId()).orElseThrow(() -> new SystemException("המורה לא קיים/ת במערכת"));
+        School school=  teacher.getSchool();
+        return this.teacherService.getAllStudentsToTravel(school.getId());
+    }
+    @GetMapping(path = "all-students/isTravel/{numBus}",headers = { HttpHeaders.AUTHORIZATION } )
+    public List<Student> getAllStudentsToTravelByBus(HttpServletRequest req,@PathVariable int numBus) throws SystemException {
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        Teacher teacher = teacherRepo.findById(user.getId()).orElseThrow(() -> new SystemException("המורה לא קיים/ת במערכת"));
+        School school=  teacher.getSchool();
+        return this.teacherService.getAllStudentsToTravelByBus(school.getId(),numBus);
     }
 }
 

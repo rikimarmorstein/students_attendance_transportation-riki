@@ -3,12 +3,15 @@ package app.core.services;
 import app.core.auth.JwtUtil;
 import app.core.auth.UserCredentials;
 import app.core.entities.School;
+import app.core.entities.Student;
 import app.core.entities.Teacher;
+import app.core.exception.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.security.auth.login.LoginException;
+import java.util.List;
 
 @Service
 @Transactional
@@ -27,4 +30,18 @@ public class TeacherService extends  ClientService{
         }
         throw new LoginException("טלפון וסיסמא שגויים!");
     }
+
+    public List<Student> getAllStudents (int schoolId){
+      return  this.studentRepo.findAllBySchoolId(schoolId);
+    }
+    public List<Student> getAllStudentsByClass (int numClass, int schoolId){
+      return  this.studentRepo.findAllByNumClassAndSchoolId(numClass, schoolId);
+    }
+    public Student getOneStudent (int studentId) throws SystemException {
+      return  this.studentRepo.findById(studentId).orElseThrow(() ->new SystemException("התלמיד אינו קיים במערכת"));
+    }
+
+//    public boolean isStudentTravel (int studentId){
+//        return  this.studentRepo.isTravel(studentId);
+//    }
 }

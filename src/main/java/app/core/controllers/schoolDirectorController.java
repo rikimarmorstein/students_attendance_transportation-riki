@@ -25,14 +25,12 @@ public class schoolDirectorController {
     @ResponseStatus(HttpStatus.CREATED)
     public void addStudent(@RequestBody Student student, HttpServletRequest req) throws SystemException {
         UserCredentials user = (UserCredentials) req.getAttribute("user");
-        student.setId(user.getId());
         schoolDirectorService.addStudent(student);
     }
     @PostMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "teacher")
     @ResponseStatus(HttpStatus.CREATED)
     public void addStudent(@RequestBody Teacher teacher, HttpServletRequest req) throws SystemException {
         UserCredentials user = (UserCredentials) req.getAttribute("user");
-        teacher.setId(user.getId());
         schoolDirectorService.addTeacher(teacher);
     }
 

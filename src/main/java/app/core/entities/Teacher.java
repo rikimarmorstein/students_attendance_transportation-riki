@@ -26,6 +26,10 @@ public class Teacher {
     private int numClass;
     @Column(nullable = false)
     private String password;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="school_id")
+    private School school;
 //    @ManyToOne
 //    @JoinColumn(name="")
 //    private WeeklySystem weeklySystem ;

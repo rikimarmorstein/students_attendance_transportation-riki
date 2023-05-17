@@ -30,4 +30,7 @@ public class School {
         @JsonIgnore
     @OneToMany(mappedBy = "school", cascade = CascadeType.ALL)
     private List<Student> students;
+        @JsonIgnore
+    @OneToMany(mappedBy = "school", cascade = CascadeType.ALL)
+    private List<Teacher> teachers;
 }

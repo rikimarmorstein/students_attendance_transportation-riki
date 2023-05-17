@@ -11,10 +11,18 @@ import java.util.List;
 public interface StudentRepo extends JpaRepository<Student, Integer> {
 
     boolean existsByStudentId(String studentId);
+
     List<Student> findAllBySchoolId(int schoolId);
 
     List<Student> findAllByNumClassAndSchoolId(int numClass, int schoolId);
+
+    List<Student> findAllBySchoolIdAndIsTravelTrue(int schoolId);
+    List<Student> findAllBySchoolIdAndNumBusIdAndIsTravelTrue(int schoolId, int numBus );
+
+   //צריך למחוק את זה אבל לא מחקתי כי המתודות משתמשות בזה, אז צריך קודם לשנות אותן ואז להשתמש במתודה מעל ולא בזאתי
     List<Student> findAllByNumClass(int numClass);
+
+    List<Student> findAllByNumBus(int bus);
 
 
     @Modifying
@@ -27,7 +35,6 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
 //    void Travel(int id);
     void isTravel(int id);
 
-
     @Modifying
     @Query(value ="update `student` set cause = ?  where id =?;", nativeQuery = true)
     void whatCause(String cause ,int id);
@@ -36,6 +43,5 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
     @Query(value ="update `student` set hour = ?  where id =?;", nativeQuery = true)
     void whichHour(String hour ,int id);
 
-    List<Student> findAllByNumBus(int bus);
 
 }

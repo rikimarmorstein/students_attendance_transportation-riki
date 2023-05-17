@@ -15,29 +15,42 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(nullable = false, unique = true)
     private String studentId;
+
     @Column(nullable = false)
     private String firstName;
+
     @Column(nullable = false)
     private String lastName;
-    @Column(nullable = false)
+
+    @Column(nullable = false , unique = true)
     private String phone;
+
     private int numClass;
+
     @ManyToOne
     @JoinColumn(name="school_id")
     private School school;
+
     @Column(nullable = false)
     private boolean isTravel;
+
     private Cause cause;
+
     @Column(nullable = false)
     private String pickupAddress;
+
     @ManyToOne
     @JoinColumn(name = "bus_id")
     private Transportation numBus;
+
     @Column(nullable = false)
     private Hour hour;
+
     private String remark;
+
     @Column(nullable = false)
     private String password;
 //    @ManyToOne

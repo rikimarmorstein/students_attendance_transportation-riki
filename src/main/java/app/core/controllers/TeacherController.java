@@ -38,6 +38,14 @@ public class TeacherController {
         School school=  teacher.getSchool();
         return this.teacherService.getAllStudentsByClass(numClass, school.getId());
     }
+
+        @GetMapping(path = "all-students/isTravel",headers = { HttpHeaders.AUTHORIZATION } )
+    public List<Student> getAllStudentsToTravel(HttpServletRequest req) throws SystemException {
+            UserCredentials user = (UserCredentials) req.getAttribute("user");
+            Teacher teacher = teacherRepo.findById(user.getId()).orElseThrow(() -> new SystemException("המורה לא קיים/ת במערכת"));
+            School school=  teacher.getSchool();
+            return this.teacherService.getAllStudentsToTravel(school.getId());
+    }
 }
 
 

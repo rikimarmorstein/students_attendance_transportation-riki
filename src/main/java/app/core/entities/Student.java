@@ -1,4 +1,5 @@
 package app.core.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,11 +31,12 @@ public class Student {
 
     private int numClass;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="school_id")
     private School school;
 
-    @Column(nullable = false)
+    @Column(nullable = false )
     private boolean isTravel;
 
     private Cause cause;

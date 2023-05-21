@@ -3,6 +3,7 @@ package app.core.login;
 import app.core.auth.UserCredentials;
 import app.core.exception.SystemException;
 import app.core.services.AdminService;
+import app.core.services.ParentService;
 import app.core.services.SchoolDirectorService;
 import app.core.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class LoginManager {
 
     @Autowired
     private TeacherService teacherService;
+
+    @Autowired
+    private ParentService parentService;
 
     public String login(UserCredentials userCredentials) throws SystemException, LoginException {
         switch (userCredentials.getClientType().name()) {
@@ -42,8 +46,8 @@ public class LoginManager {
 
             case "PARENT":
 
-                String tokenParentService = teacherService.login(userCredentials);
-                return tokenTeacherService;
+                String tokenParentService = parentService.login(userCredentials);
+                return tokenParentService;
 
             default:
                 throw new SystemException("Invalid Client Type");

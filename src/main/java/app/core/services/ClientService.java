@@ -2,6 +2,7 @@ package app.core.services;
 
 import app.core.auth.UserCredentials;
 import app.core.exception.SystemException;
+import app.core.repositories.ParentRepo;
 import app.core.repositories.SchoolRepo;
 import app.core.repositories.StudentRepo;
 import app.core.repositories.TeacherRepo;
@@ -16,5 +17,8 @@ public abstract class ClientService {
     protected TeacherRepo teacherRepo;
     @Autowired
     protected SchoolRepo schoolRepo;
+
+    @Autowired
+    protected ParentRepo parentRepo;
     public abstract String login(UserCredentials userCredentials) throws SystemException, LoginException;
 }

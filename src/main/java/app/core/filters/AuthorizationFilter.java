@@ -50,6 +50,12 @@ public class AuthorizationFilter implements Filter {
 				httpResponse.setHeader("WWW-Authenticate", "Bearer realm=\"TEACHER API\"");
 				httpResponse.setHeader("Access-Control-Expose-Headers", "*");
 				httpResponse.sendError(HttpStatus.UNAUTHORIZED.value(), "Only teacher can access this zone!");
+			} else if (requestUri.contains("/api/parent")
+					&& user.getClientType() != ClientType.PARENT) {
+				httpResponse.setHeader("Access-Control-Allow-Origin", "*"); // for CORS
+				httpResponse.setHeader("WWW-Authenticate", "Bearer realm=\"PARENT API\"");
+				httpResponse.setHeader("Access-Control-Expose-Headers", "*");
+				httpResponse.sendError(HttpStatus.UNAUTHORIZED.value(), "Only teacher can access this zone!");
 			} else {
 				chain.doFilter(request, response);
 			}

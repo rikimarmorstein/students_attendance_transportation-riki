@@ -39,6 +39,12 @@ public class LoginManager {
 
                 String tokenTeacherService = teacherService.login(userCredentials);
                 return tokenTeacherService;
+
+            case "PARENT":
+
+                String tokenParentService = teacherService.login(userCredentials);
+                return tokenTeacherService;
+
             default:
                 throw new SystemException("Invalid Client Type");
         }

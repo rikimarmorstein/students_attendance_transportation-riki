@@ -22,6 +22,6 @@ public class UserCredentials {
 	private ClientType clientType;
 
 	public enum ClientType {
-		ADMIN, SCHOOL_DIRECTOR, TEACHER;
+		ADMIN, SCHOOL_DIRECTOR, TEACHER,PARENT;
 	}
 }

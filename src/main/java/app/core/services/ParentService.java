@@ -7,6 +7,8 @@ import app.core.exception.SystemException;
 import javax.security.auth.login.LoginException;
 import app.core.auth.JwtUtil;
 
+import java.util.List;
+
 @Service
 @Transactional
 
@@ -24,4 +26,9 @@ public class ParentService extends ClientService{
         }
         throw new LoginException("טלפון שגוי!");
     }
+
+    public List<Student> getAllStudentsByPhone(String phone){
+        return  this.studentRepo.findAllByPhone(phone);
+    }
+
 }

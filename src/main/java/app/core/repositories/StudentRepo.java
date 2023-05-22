@@ -2,6 +2,7 @@ package app.core.repositories;
 
 import app.core.entities.School;
 import app.core.entities.Student;
+import app.core.entities.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +12,10 @@ import java.util.List;
 public interface StudentRepo extends JpaRepository<Student, Integer> {
 
     boolean existsByStudentId(String studentId);
+
+    boolean existsByPhone(String phone);
+
+    Student findByPhone(String phone);
 
     List<Student> findAllBySchoolId(int schoolId);
 

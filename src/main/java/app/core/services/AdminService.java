@@ -56,6 +56,7 @@ if(schoolRepo.existsBySchoolName(school.getSchoolName())){
         schoolFromData.setSchoolName(school.getSchoolName());
         schoolFromData.setAddress(school.getAddress());
         schoolFromData.setPhone(school.getPhone());
+        schoolFromData.setPassword(school.getPassword());
 
         schoolRepo.saveAndFlush(schoolFromData);
         }

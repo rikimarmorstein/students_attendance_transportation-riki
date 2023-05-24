@@ -24,6 +24,11 @@ public class schoolDirectorController {
     @Autowired
     private SchoolDirectorService schoolDirectorService ;
 
+    @PutMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "school")
+    public void updateSchool(@RequestBody School school) throws SystemException {
+        schoolDirectorService.updateSchool(school);
+    }
+
     @PostMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "student")
     @ResponseStatus(HttpStatus.CREATED)
     public void addStudent(@RequestBody Student student, HttpServletRequest req) throws SystemException {

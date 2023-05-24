@@ -8,12 +8,14 @@ import app.core.exception.SystemException;
 import app.core.repositories.SchoolRepo;
 import app.core.services.AdminService;
 import app.core.services.SchoolDirectorService;
+import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -43,8 +45,14 @@ public class schoolDirectorController {
 schoolDirectorService.updateTeacher(teacher);
     }
 @DeleteMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "teacher")
-    public void deleteTeacher(int teacherId) throws SystemException{
+    public void deleteTeacher(@PathVariable int teacherId) throws SystemException{
         schoolDirectorService.deleteTeacher(teacherId);
+    }
+@GetMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "all-teachers")
+    public List<Teacher> getAllTeachers(HttpServletRequest req) throws SystemException{
+    UserCredentials user = (UserCredentials) req.getAttribute("user");
+    School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
+        return  schoolDirectorService.getAllTeachers(school.getId());
     }
 
     @PostMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "student")

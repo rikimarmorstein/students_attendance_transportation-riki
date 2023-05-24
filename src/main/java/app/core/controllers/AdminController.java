@@ -24,7 +24,7 @@ public class AdminController {
     @Autowired
     private LoginManager loginManager;
 
-    @PostMapping()
+    @PostMapping(path = "login")
     @ResponseStatus(HttpStatus.CREATED)
     public String login(@RequestBody UserCredentials userCredentials) throws SystemException, LoginException {
         return this.loginManager.login(userCredentials);

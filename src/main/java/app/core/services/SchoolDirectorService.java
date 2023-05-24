@@ -72,8 +72,8 @@ public class SchoolDirectorService extends ClientService{
         }
         teacherRepo.deleteById(teacherId);
     }
-    public List<Teacher> getAllTeachers() throws SystemException {
-        return teacherRepo.findAll();
+    public List<Teacher> getAllTeachers(int schoolId) throws SystemException {
+        return teacherRepo.findAllBySchoolId(schoolId);
     }
     public Teacher getOneTeacher(int teacherId) throws SystemException {
         return teacherRepo.findById(teacherId).orElseThrow(()->new SystemException("מורה לא קיים במערכת"));

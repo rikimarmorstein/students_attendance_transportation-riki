@@ -89,10 +89,15 @@ schoolDirectorService.updateTeacher(teacher, school.getId());
 schoolDirectorService.deleteStudent(studentId , school.getId());
     }
     @GetMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "all-students")
-    public List<Student> getAllStudents(int schoolId, HttpServletRequest req) throws SystemException{
+    public List<Student> getAllStudents(HttpServletRequest req) throws SystemException{
         UserCredentials user = (UserCredentials) req.getAttribute("user");
         School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
         return  schoolDirectorService.getAllStudents(school.getId());
     }
-
+    @GetMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "one-student/{studentId}")
+    public Student getOneStudent(@PathVariable int studentId ,HttpServletRequest req) throws SystemException{
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
+        return schoolDirectorService.getOneStudent(studentId, school.getId());
+    }
 }

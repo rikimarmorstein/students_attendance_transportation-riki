@@ -42,8 +42,5 @@ public class Teacher {
 //    @OneToMany(mappedBy = "student")
 //    private List<Student> students;///
 
-    public enum Day{
-
-    }
 
 }

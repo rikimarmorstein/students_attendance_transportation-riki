@@ -3,12 +3,14 @@ package app.core.controllers;
 import app.core.auth.UserCredentials;
 import app.core.entities.School;
 import app.core.exception.SystemException;
+import app.core.login.LoginManager;
 import app.core.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 @CrossOrigin("*")
@@ -18,7 +20,15 @@ public class AdminController {
 
 @Autowired
     private AdminService adminService;
-    //controller
+
+    @Autowired
+    private LoginManager loginManager;
+
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public String login(@RequestBody UserCredentials userCredentials) throws SystemException, LoginException {
+        return this.loginManager.login(userCredentials);
+    }
 
     @PostMapping(headers = { HttpHeaders.AUTHORIZATION },path = "school")
     @ResponseStatus(HttpStatus.CREATED)

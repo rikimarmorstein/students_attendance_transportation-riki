@@ -162,11 +162,19 @@ public class SchoolDirectorService extends ClientService{
         studentRepo.isTravel(studentId);
     }
 
-    public void whatCause(String cause ,int studentId){
+    public void whatCause(String cause ,int studentId,int schoolId) throws SystemException {
+        Student student = studentRepo.findById(studentId).orElseThrow(() -> new SystemException("תלמיד לא קיים במערכת"));
+        if (student.getSchool().getId() != schoolId){
+            throw new SystemException("תלמיד לא קיים בבית ספר זה.");
+        }
         studentRepo.whatCause(cause ,studentId);
     }
 
-    public void whichHour(String hour ,int studentId){
+    public void whichHour(String hour ,int studentId,int schoolId) throws SystemException {
+        Student student = studentRepo.findById(studentId).orElseThrow(() -> new SystemException("תלמיד לא קיים במערכת"));
+        if (student.getSchool().getId() != schoolId){
+            throw new SystemException("תלמיד לא קיים בבית ספר זה.");
+        }
         studentRepo.whichHour(hour ,studentId);
     }
 

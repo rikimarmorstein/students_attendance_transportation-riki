@@ -46,7 +46,7 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
     void whatCause(String cause ,int id);
 
     @Modifying
-    @Query(value ="update `students , ` set hour = ?  where id =?;", nativeQuery = true)
+    @Query(value ="update `students` set hour = ?  where id =?;", nativeQuery = true)
     void whichHour(String hour ,int id);
 
 

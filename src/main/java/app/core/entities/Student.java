@@ -39,6 +39,7 @@ public class Student {
     @Column(nullable = false )
     private boolean isTravel;
 
+    @Enumerated(EnumType.STRING)
     private Cause cause;
 
     @Column(nullable = false)
@@ -48,6 +49,8 @@ public class Student {
     @JoinColumn(name = "bus_id")
     private Transportation numBus;
 
+
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Hour hour;
 

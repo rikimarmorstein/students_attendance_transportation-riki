@@ -142,8 +142,8 @@ public class SchoolDirectorService extends ClientService{
         }
         return student;
     }
-    public List<Student> getAllStudentsByClass(int numClass) throws SystemException {
-        return studentRepo.findAllByNumClass(numClass);
+    public List<Student> getAllStudentsByClass(int numClass ,int schoolId) throws SystemException {
+        return studentRepo.findAllByNumClassAndSchoolId(numClass, schoolId);
     }
 
     public void isStudentNotTravel(int idStudent){

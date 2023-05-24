@@ -113,4 +113,17 @@ public class schoolDirectorController {
         School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
     return schoolDirectorService.getAllStudentsByClass(numClass,school.getId());
     }
+    @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "set-student-to-not-travel")
+    public void setStudentToNotTravel(int studentId, HttpServletRequest req) throws SystemException{
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
+    schoolDirectorService.setStudentToNotTravel(studentId, school.getId());
+    }
+    @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "set-student-to-travel")
+    public void setStudentToTravel(int studentId, HttpServletRequest req) throws SystemException {
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
+        schoolDirectorService.setStudentToTravel(studentId, school.getId());
+    }
+
 }

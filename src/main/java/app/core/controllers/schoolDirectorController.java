@@ -29,14 +29,6 @@ public class schoolDirectorController {
         schoolDirectorService.updateSchool(school);
     }
 
-    @PostMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "student")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addStudent(@RequestBody Student student, HttpServletRequest req) throws SystemException {
-        UserCredentials user = (UserCredentials) req.getAttribute("user");
-        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
-        student.setSchool(school);
-        schoolDirectorService.addStudent(student);
-    }
     @PostMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "teacher")
     @ResponseStatus(HttpStatus.CREATED)
     public void addTeacher(@RequestBody Teacher teacher, HttpServletRequest req) throws SystemException {
@@ -44,6 +36,20 @@ public class schoolDirectorController {
         School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
         teacher.setSchool(school);
         schoolDirectorService.addTeacher(teacher);
+    }
+
+    @PutMapping (headers = { HttpHeaders.AUTHORIZATION }, path = "teacher")
+    public void updateTeacher(@RequestBody Teacher teacher) throws SystemException{
+schoolDirectorService.updateTeacher(teacher);
+    }
+
+    @PostMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "student")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addStudent(@RequestBody Student student, HttpServletRequest req) throws SystemException {
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
+        student.setSchool(school);
+        schoolDirectorService.addStudent(student);
     }
 
 }

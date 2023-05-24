@@ -104,11 +104,15 @@ public class SchoolDirectorService extends ClientService{
         studentRepo.saveAndFlush(studentFromData);
     }
 
-    public void deleteStudent(int idStudent) throws SystemException {
-        if(!studentRepo.existsById(idStudent)){
+    public void deleteStudent(int studentId, int schoolId) throws SystemException {
+        if(!studentRepo.existsById(studentId)){
             throw new SystemException("תלמיד לא קיים במערכת, לא ניתן למחוק");
         }
-        studentRepo.deleteById(idStudent);
+        Student studentFromDb = studentRepo.findById(studentId).orElseThrow(() -> new SystemException("תלמיד לא קיים במערכת"));
+        if (schoolId != studentFromDb.getSchool().getId()){
+            throw new SystemException("התלמיד לא נמצא בבית הספר הזה , לא ניתן למחוק אותו");
+        }
+        studentRepo.deleteById(studentId);
     }
     public List<Student> getAllStudents() throws SystemException {
         return studentRepo.findAll();

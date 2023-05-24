@@ -72,8 +72,11 @@ schoolDirectorService.updateTeacher(teacher);
         schoolDirectorService.updateStudent(student);
     }
 
-    public void deleteStudent(int idStudent) throws SystemException{
-
+    @DeleteMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "student/{studentId}")
+    public void deleteStudent(@PathVariable int studentId, HttpServletRequest req) throws SystemException{
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
+schoolDirectorService.deleteStudent(studentId , school.getId());
     }
 
 }

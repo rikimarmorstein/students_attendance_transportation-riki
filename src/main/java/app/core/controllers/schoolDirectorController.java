@@ -48,11 +48,15 @@ schoolDirectorService.updateTeacher(teacher);
     public void deleteTeacher(@PathVariable int teacherId) throws SystemException{
         schoolDirectorService.deleteTeacher(teacherId);
     }
-@GetMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "all-teachers")
+    @GetMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "all-teachers")
     public List<Teacher> getAllTeachers(HttpServletRequest req) throws SystemException{
     UserCredentials user = (UserCredentials) req.getAttribute("user");
     School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
         return  schoolDirectorService.getAllTeachers(school.getId());
+    }
+    @GetMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "one-teacher")
+    public Teacher getOneTeacher(int teacherId) throws SystemException{
+        return schoolDirectorService.getOneTeacher(teacherId);
     }
 
     @PostMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "student")

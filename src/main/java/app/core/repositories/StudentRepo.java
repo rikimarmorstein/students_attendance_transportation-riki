@@ -21,12 +21,10 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
 
     List<Student> findAllByPhone(String phone);
 
-
-
-    List<Student> findAllByNumClassAndSchoolId(int numClass, int schoolId);
-
     List<Student> findAllBySchoolIdAndIsTravelTrue(int schoolId);
     List<Student> findAllBySchoolIdAndNumBusIdAndIsTravelTrue(int schoolId, int numBus );
+
+    List<Student> findAllByNumClassAndSchoolId(int numClass, int schoolId);
 
    //צריך למחוק את זה אבל לא מחקתי כי המתודות משתמשות בזה, אז צריך קודם לשנות אותן ואז להשתמש במתודה מעל ולא בזאתי
     List<Student> findAllByNumClass(int numClass);

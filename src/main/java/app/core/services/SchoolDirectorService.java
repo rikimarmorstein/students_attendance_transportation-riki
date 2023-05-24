@@ -99,6 +99,8 @@ public class SchoolDirectorService extends ClientService{
         studentFromData.setNumClass(student.getNumClass());
         studentFromData.setPickupAddress(student.getPickupAddress());
         studentFromData.setNumBus(student.getNumBus());
+        studentFromData.setPassword(student.getPassword());
+
         studentRepo.saveAndFlush(studentFromData);
     }
 

@@ -42,6 +42,10 @@ public class schoolDirectorController {
     public void updateTeacher(@RequestBody Teacher teacher) throws SystemException{
 schoolDirectorService.updateTeacher(teacher);
     }
+@DeleteMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "teacher")
+    public void deleteTeacher(int teacherId) throws SystemException{
+        schoolDirectorService.deleteTeacher(teacherId);
+    }
 
     @PostMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "student")
     @ResponseStatus(HttpStatus.CREATED)

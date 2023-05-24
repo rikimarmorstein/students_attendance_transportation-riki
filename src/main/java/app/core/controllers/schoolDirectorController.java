@@ -126,4 +126,19 @@ public class schoolDirectorController {
         schoolDirectorService.setStudentToTravel(studentId, school.getId());
     }
 
+    //אלו למטה לא עובדיםםם
+
+//    @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "set-student-cause")
+//    public void whatCause(String cause ,int studentId,HttpServletRequest req) throws SystemException {
+//        UserCredentials user = (UserCredentials) req.getAttribute("user");
+//        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
+//    schoolDirectorService.whatCause(cause,studentId,school.getId());
+//    }
+//    @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "set-student-hour")
+//    public void whichHour(String hour ,int studentId,HttpServletRequest req) throws SystemException {
+//        UserCredentials user = (UserCredentials) req.getAttribute("user");
+//        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
+//        schoolDirectorService.whichHour(hour, studentId, school.getId());
+//    }
+
 }

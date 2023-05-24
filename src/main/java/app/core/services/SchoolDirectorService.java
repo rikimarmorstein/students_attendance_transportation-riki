@@ -31,8 +31,11 @@ public class SchoolDirectorService extends ClientService{
     }
 
 
-    public void updateSchool(School school) throws SystemException {
+    public void updateSchool(School school , int schoolId) throws SystemException {
         School schoolFromData = schoolRepo.findById(school.getId()).orElseThrow(()->new SystemException("בית ספר זה לא קיים במערכת"));
+        if(school.getId() != schoolId){
+            throw new SystemException("הינך מנסה לערוך בית ספר אחר. באפשרותך לערוך רק את הפרטים שלך");
+        }
         if(schoolRepo.existsByPhone(school.getPhone()) && !school.getPhone().equals(schoolFromData.getPhone())) {
             throw new SystemException("מס' הטלפון קיים במערכת, לא ניתן לעדכן");
         }if(schoolRepo.existsBySchoolName(school.getSchoolName()) && !school.getSchoolName().equals(schoolFromData.getSchoolName())) {
@@ -53,8 +56,11 @@ public class SchoolDirectorService extends ClientService{
         teacherRepo.save(teacher);
     }
 
-    public void updateTeacher(Teacher teacher) throws SystemException {
+    public void updateTeacher(Teacher teacher , int schoolId) throws SystemException {
         Teacher teacherFromData = teacherRepo.findById(teacher.getId()).orElseThrow(()->new SystemException("מורה זה לא קיים במערכת"));
+        if (schoolId != teacherFromData.getSchool().getId()){
+            throw new SystemException("המורה לא נמצא בבית הספר הזה , לא ניתן לעדכן אותו");
+        }
         if(teacherRepo.existsByPhone(teacher.getPhone()) && !teacher.getPhone().equals(teacherFromData.getPhone())) {
             throw new SystemException("מס' הטלפון קיים במערכת, לא ניתן לעדכן");
         }
@@ -66,7 +72,11 @@ public class SchoolDirectorService extends ClientService{
         teacherRepo.saveAndFlush(teacherFromData);
     }
 
-    public void deleteTeacher(int teacherId) throws SystemException {
+    public void deleteTeacher(int teacherId , int schoolId) throws SystemException {
+        Teacher teacherFromDb = teacherRepo.findById(teacherId).orElseThrow(() -> new SystemException("מורה לא קיים במערכת"));
+        if (schoolId != teacherFromDb.getSchool().getId()){
+            throw new SystemException("המורה לא נמצא בבית הספר הזה , לא ניתן למחוק אותו");
+        }
         if(!teacherRepo.existsById(teacherId)){
             throw new SystemException("מורה לא קיים במערכת, לא ניתן למחוק");
         }
@@ -75,8 +85,12 @@ public class SchoolDirectorService extends ClientService{
     public List<Teacher> getAllTeachers(int schoolId) throws SystemException {
         return teacherRepo.findAllBySchoolId(schoolId);
     }
-    public Teacher getOneTeacher(int teacherId) throws SystemException {
-        return teacherRepo.findById(teacherId).orElseThrow(()->new SystemException("מורה לא קיים במערכת"));
+    public Teacher getOneTeacher(int teacherId , int schoolId) throws SystemException {
+       Teacher teacher= teacherRepo.findById(teacherId).orElseThrow(() -> new SystemException("מורה לא קיים במערכת"));
+        if (teacher.getSchool().getId() != schoolId){
+            throw new SystemException("מורה לא קיים בבית ספר זה.");
+        }
+        return teacher;
     }
 
 
@@ -87,8 +101,11 @@ public class SchoolDirectorService extends ClientService{
         studentRepo.save(student);
     }
 
-    public void updateStudent(Student student) throws SystemException {
+    public void updateStudent(Student student, int schoolId) throws SystemException {
         Student studentFromData = studentRepo.findById(student.getId()).orElseThrow(()->new SystemException("תלמיד זה לא קיים במערכת"));
+        if (schoolId != studentFromData.getSchool().getId()){
+            throw new SystemException("התלמיד לא נמצא בבית הספר הזה , לא ניתן לעדכן אותו");
+        }
         if(studentRepo.existsByStudentId(student.getStudentId()) && !student.getStudentId().equals(studentFromData.getStudentId())) {
             throw new SystemException("מס' ת.ז. קיים במערכת, לא ניתן לעדכן");
         }
@@ -105,21 +122,25 @@ public class SchoolDirectorService extends ClientService{
     }
 
     public void deleteStudent(int studentId, int schoolId) throws SystemException {
-        if(!studentRepo.existsById(studentId)){
-            throw new SystemException("תלמיד לא קיים במערכת, לא ניתן למחוק");
-        }
         Student studentFromDb = studentRepo.findById(studentId).orElseThrow(() -> new SystemException("תלמיד לא קיים במערכת"));
         if (schoolId != studentFromDb.getSchool().getId()){
             throw new SystemException("התלמיד לא נמצא בבית הספר הזה , לא ניתן למחוק אותו");
         }
+        if(!studentRepo.existsById(studentId)){
+            throw new SystemException("תלמיד לא קיים במערכת, לא ניתן למחוק");
+        }
         studentRepo.deleteById(studentId);
     }
-    public List<Student> getAllStudents() throws SystemException {
-        return studentRepo.findAll();
+    public List<Student> getAllStudents(int schoolId) throws SystemException {
+        return studentRepo.findAllBySchoolId(schoolId);
     }
 
-    public Student getOneStudent(int idStudent) throws SystemException {
-        return studentRepo.findById(idStudent).orElseThrow(()->new SystemException("תלמיד לא קיים במערכת"));
+    public Student getOneStudent(int studentId , int schoolId) throws SystemException {
+        Student student = studentRepo.findById(studentId).orElseThrow(() -> new SystemException("תלמיד לא קיים במערכת"));
+        if (student.getSchool().getId() != schoolId){
+            throw new SystemException("תלמיד לא קיים בבית ספר זה.");
+        }
+        return student;
     }
     public List<Student> getAllStudentsByClass(int numClass) throws SystemException {
         return studentRepo.findAllByNumClass(numClass);

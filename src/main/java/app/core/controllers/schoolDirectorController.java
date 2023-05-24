@@ -27,8 +27,10 @@ public class schoolDirectorController {
     private SchoolDirectorService schoolDirectorService ;
 
     @PutMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "school")
-    public void updateSchool(@RequestBody School school) throws SystemException {
-        schoolDirectorService.updateSchool(school);
+    public void updateSchool(@RequestBody School school, HttpServletRequest req) throws SystemException {
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        School schoolFromDb = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
+        schoolDirectorService.updateSchool(school, schoolFromDb.getId());
     }
 
     @PostMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "teacher")
@@ -41,12 +43,16 @@ public class schoolDirectorController {
     }
 
     @PutMapping (headers = { HttpHeaders.AUTHORIZATION }, path = "teacher")
-    public void updateTeacher(@RequestBody Teacher teacher) throws SystemException{
-schoolDirectorService.updateTeacher(teacher);
+    public void updateTeacher(@RequestBody Teacher teacher, HttpServletRequest req) throws SystemException{
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
+schoolDirectorService.updateTeacher(teacher, school.getId());
     }
 @DeleteMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "teacher/{teacherId}")
-    public void deleteTeacher(@PathVariable int teacherId) throws SystemException{
-        schoolDirectorService.deleteTeacher(teacherId);
+    public void deleteTeacher(@PathVariable int teacherId, HttpServletRequest req) throws SystemException{
+    UserCredentials user = (UserCredentials) req.getAttribute("user");
+    School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
+        schoolDirectorService.deleteTeacher(teacherId, school.getId());
     }
     @GetMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "all-teachers")
     public List<Teacher> getAllTeachers(HttpServletRequest req) throws SystemException{
@@ -55,8 +61,10 @@ schoolDirectorService.updateTeacher(teacher);
         return  schoolDirectorService.getAllTeachers(school.getId());
     }
     @GetMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "one-teacher/{teacherId}")
-    public Teacher getOneTeacher(@PathVariable int teacherId) throws SystemException{
-        return schoolDirectorService.getOneTeacher(teacherId);
+    public Teacher getOneTeacher(@PathVariable int teacherId, HttpServletRequest req) throws SystemException{
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
+        return schoolDirectorService.getOneTeacher(teacherId, school.getId());
     }
 
     @PostMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "student")
@@ -68,8 +76,10 @@ schoolDirectorService.updateTeacher(teacher);
         schoolDirectorService.addStudent(student);
     }
     @PutMapping (headers = { HttpHeaders.AUTHORIZATION }, path = "student")
-    public void updateStudent(@RequestBody Student student) throws SystemException{
-        schoolDirectorService.updateStudent(student);
+    public void updateStudent(@RequestBody Student student, HttpServletRequest req) throws SystemException{
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
+        schoolDirectorService.updateStudent(student, school.getId());
     }
 
     @DeleteMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "student/{studentId}")
@@ -77,6 +87,12 @@ schoolDirectorService.updateTeacher(teacher);
         UserCredentials user = (UserCredentials) req.getAttribute("user");
         School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
 schoolDirectorService.deleteStudent(studentId , school.getId());
+    }
+    @GetMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "all-students")
+    public List<Student> getAllStudents(int schoolId, HttpServletRequest req) throws SystemException{
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
+        return  schoolDirectorService.getAllStudents(school.getId());
     }
 
 }

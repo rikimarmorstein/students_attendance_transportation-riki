@@ -108,19 +108,19 @@ public class schoolDirectorController {
     }
 
     @GetMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "all-student-class")
-    public List<Student> getAllStudentsByClass(int numClass, HttpServletRequest req) throws SystemException {
+    public List<Student> getAllStudentsByClass(@RequestParam int numClass, HttpServletRequest req) throws SystemException {
         UserCredentials user = (UserCredentials) req.getAttribute("user");
         School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
     return schoolDirectorService.getAllStudentsByClass(numClass,school.getId());
     }
-    @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "set-student-to-not-travel")
-    public void setStudentToNotTravel(int studentId, HttpServletRequest req) throws SystemException{
+    @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "set-student-to-not-travel/{studentId}")
+    public void setStudentToNotTravel(@PathVariable int studentId, HttpServletRequest req) throws SystemException{
         UserCredentials user = (UserCredentials) req.getAttribute("user");
         School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
     schoolDirectorService.setStudentToNotTravel(studentId, school.getId());
     }
-    @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "set-student-to-travel")
-    public void setStudentToTravel(int studentId, HttpServletRequest req) throws SystemException {
+    @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "set-student-to-travel/{studentId}")
+    public void setStudentToTravel( @PathVariable int studentId, HttpServletRequest req) throws SystemException {
         UserCredentials user = (UserCredentials) req.getAttribute("user");
         School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
         schoolDirectorService.setStudentToTravel(studentId, school.getId());
@@ -128,17 +128,26 @@ public class schoolDirectorController {
 
     //אלו למטה לא עובדיםםם
 
-    @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "set-student-cause")
-    public void whatCause(String cause ,int studentId,HttpServletRequest req) throws SystemException {
+    @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "set-student-cause/{studentId}")
+    public void whatCause(@RequestParam String cause ,@PathVariable int studentId,HttpServletRequest req) throws SystemException {
         UserCredentials user = (UserCredentials) req.getAttribute("user");
         School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
     schoolDirectorService.whatCause(cause,studentId,school.getId());
     }
-    @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "set-student-hour")
-    public void whichHour(String hour ,int studentId,HttpServletRequest req) throws SystemException {
+    @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "set-student-hour/{studentId}")
+    public void whichHour(@RequestParam String hour ,@PathVariable int studentId,HttpServletRequest req) throws SystemException {
         UserCredentials user = (UserCredentials) req.getAttribute("user");
         School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
         schoolDirectorService.whichHour(hour, studentId, school.getId());
     }
+    // הוספתי את המתודה האחרונה
+
+    @GetMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "all-students-to-travel-by-bus")
+    public List<Student> getAllStudentsToTravelByBus(@RequestParam int numBus,HttpServletRequest req) throws SystemException {
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("לא קיימים תלמידים במספר הסעה" + numBus));
+        return schoolDirectorService.getAllStudents(school.getId());
+    }
+
 
 }

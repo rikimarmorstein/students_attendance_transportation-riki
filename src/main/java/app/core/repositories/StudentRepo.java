@@ -22,7 +22,8 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
     List<Student> findAllByPhone(String phone);
 
     List<Student> findAllBySchoolIdAndIsTravelTrue(int schoolId);
-    List<Student> findAllBySchoolIdAndNumBusIdAndIsTravelTrue(int schoolId, int numBus );
+//    List<Student> findAllBySchoolIdAndNumBusIdAndIsTravelTrue(int schoolId, int numBus );
+    List<Student> findAllBySchoolIdAndNumBusAndIsTravelTrue(int schoolId, int numBus );
 
     List<Student> findAllByNumClassAndSchoolId(int numClass, int schoolId);
 

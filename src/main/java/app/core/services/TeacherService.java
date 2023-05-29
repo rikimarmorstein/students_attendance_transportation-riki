@@ -42,7 +42,7 @@ public class TeacherService extends  ClientService{
         return this.studentRepo.findAllBySchoolIdAndIsTravelTrue(schoolId);
     }
     public List<Student> getAllStudentsToTravelByBus(int schoolId, int numBus){
-        return this.studentRepo.findAllBySchoolIdAndNumBusIdAndIsTravelTrue(schoolId, numBus);
+        return this.studentRepo.findAllBySchoolIdAndNumBusAndIsTravelTrue(schoolId, numBus);
     }
     public Student getOneStudent (int studentId) throws SystemException {
       return  this.studentRepo.findById(studentId).orElseThrow(() ->new SystemException("התלמיד אינו קיים במערכת"));

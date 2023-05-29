@@ -21,7 +21,7 @@ public class Transportation {
     private int id;
     @Column(nullable = false)
     private int numBus;
-    @JsonIgnore
-    @OneToMany(mappedBy = "numBus")
-    private List<Student> students;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "numBus")
+//    private List<Student> students;
 }

@@ -6,6 +6,7 @@ import app.core.entities.School;
 import app.core.entities.Student;
 import app.core.entities.Teacher;
 import app.core.exception.SystemException;
+import ch.qos.logback.core.joran.spi.ConsoleTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +50,9 @@ public class SchoolDirectorService extends ClientService{
     }
 
 
-    public void addTeacher(Teacher teacher) throws SystemException {
+    public void addTeacher(Teacher teacher, int schoolId) throws SystemException {
+        School school = schoolRepo.findById(schoolId).orElseThrow(()->new SystemException("בית ספר זה לא קיים במערכת"));
+        teacher.setSchool(school);
         if(teacherRepo.existsByPhone(teacher.getPhone())){
             throw new SystemException("מס' הטלפון קיים במערכת, לא ניתן לבצע רישום נוסף");
         }
@@ -94,7 +97,13 @@ public class SchoolDirectorService extends ClientService{
     }
 
 
-    public void addStudent(Student student) throws SystemException {
+    public void addStudent(Student student, int schoolId) throws SystemException {
+        School school = schoolRepo.findById(schoolId).orElseThrow(()->new SystemException("בית ספר זה לא קיים במערכת"));
+        System.out.println("fff");
+        student.setSchool(school);
+        System.out.println(school);
+        System.out.println(student);
+
         if(studentRepo.existsByStudentId(student.getStudentId())){
             throw new SystemException("תלמיד קיים במערכת, לא ניתן לבצע רישום נוסף");
         }

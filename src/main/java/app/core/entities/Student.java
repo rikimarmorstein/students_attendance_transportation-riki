@@ -44,10 +44,11 @@ public class Student {
 
     @Column(nullable = false)
     private String pickupAddress;
-
-    @ManyToOne
-    @JoinColumn(name = "bus_id")
-    private Transportation numBus;
+//@JsonIgnore
+//    @ManyToOne
+//    @JoinColumn(name = "bus_id")
+//    private Transportation numBus;
+    private int numBus;
 
 
     @Enumerated(EnumType.STRING)

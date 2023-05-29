@@ -21,17 +21,15 @@ import java.util.List;
 @RequestMapping("/api/parent/")
 public class ParentController {
 
-    @Autowired
-    private StudentRepo studentRepo;
+
     @Autowired
     private ParentService parentService;
 
     @GetMapping(path = "all-students-phone",headers = { HttpHeaders.AUTHORIZATION } )
     public List<Student> getAllStudentsByPhone (@RequestParam String phone, HttpServletRequest req) throws SystemException {
         UserCredentials user = (UserCredentials) req.getAttribute("user");
-        Student student= studentRepo.findById(user.getId()).orElseThrow(() -> new SystemException("התלמיד לא קיים/ת במערכת"));
-        School school= student.getSchool();
-        return parentService.getAllStudentsByPhone(phone, school.getId());
+
+        return parentService.getAllStudentsByPhone(phone, user.getId());
     }
 
 }

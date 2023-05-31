@@ -99,11 +99,8 @@ public class SchoolDirectorService extends ClientService{
 
     public void addStudent(Student student, int schoolId) throws SystemException {
         School school = schoolRepo.findById(schoolId).orElseThrow(()->new SystemException("בית ספר זה לא קיים במערכת"));
-        System.out.println("fff");
         student.setSchool(school);
-        System.out.println(school);
         System.out.println(student);
-
         if(studentRepo.existsByStudentId(student.getStudentId())){
             throw new SystemException("תלמיד קיים במערכת, לא ניתן לבצע רישום נוסף");
         }

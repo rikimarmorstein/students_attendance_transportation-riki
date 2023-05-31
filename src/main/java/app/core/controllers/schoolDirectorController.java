@@ -74,10 +74,7 @@ public class schoolDirectorController {
     @ResponseStatus(HttpStatus.CREATED)
     public void addStudent(@RequestBody Student student, HttpServletRequest req) throws SystemException {
         UserCredentials user = (UserCredentials) req.getAttribute("user");
-        System.out.println("ddd");
-        System.out.println(user);
-
-//        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
+        //        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
 //        student.setSchool(school);
         schoolDirectorService.addStudent(student, user.getId());
     }

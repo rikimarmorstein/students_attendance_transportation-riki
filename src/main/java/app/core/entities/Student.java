@@ -3,7 +3,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-//ghjgjk
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -57,8 +57,7 @@ public class Student {
 
     private String remark;
 
-    @Column(nullable = false)
-    private String password;
+
 //    @ManyToOne
 //    @JoinColumn(name = "teacher_id")
 //    private Teacher teacher;

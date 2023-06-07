@@ -49,6 +49,10 @@ public class SchoolDirectorService extends ClientService{
         schoolRepo.saveAndFlush(schoolFromData);
     }
 
+public School getSchoolDetails(int schoolId) throws SystemException {
+    School schoolFromData = schoolRepo.findById(schoolId).orElseThrow(()->new SystemException("בית ספר זה לא קיים במערכת"));
+    return schoolFromData;
+    }
 
     public void addTeacher(Teacher teacher, int schoolId) throws SystemException {
         School school = schoolRepo.findById(schoolId).orElseThrow(()->new SystemException("בית ספר זה לא קיים במערכת"));

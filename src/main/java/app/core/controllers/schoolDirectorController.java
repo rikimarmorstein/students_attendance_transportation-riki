@@ -32,6 +32,13 @@ public class schoolDirectorController {
 //        School schoolFromDb = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
         schoolDirectorService.updateSchool(school, user.getId());
     }
+    @GetMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "school")
+    public School getSchoolDetails( HttpServletRequest req) throws SystemException {
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        return schoolDirectorService.getSchoolDetails(user.getId());
+    }
+
+
 
     @PostMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "teacher")
     @ResponseStatus(HttpStatus.CREATED)

@@ -24,7 +24,7 @@ public class TeacherController {
     @Autowired
     private TeacherService teacherService;
 
-    @GetMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "school")
+    @GetMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "teacher")
     public Teacher getTeacherDetails(HttpServletRequest req) throws SystemException {
         UserCredentials user = (UserCredentials) req.getAttribute("user");
         return teacherService.getTeacherDetails(user.getId());

@@ -31,6 +31,13 @@ public class TeacherService extends  ClientService{
         throw new LoginException("טלפון וסיסמא שגויים!");
     }
 
+    public Teacher getTeacherDetails(int teacherId) throws SystemException {
+        Teacher teacherFromData = teacherRepo.findById(teacherId)
+                .orElseThrow(() -> new SystemException("מורה זה אינו קיים במערכת"));
+        return teacherFromData;
+    }
+
+
     public List<Student> getAllStudents (int schoolId){
       return  this.studentRepo.findAllBySchoolId(schoolId);
     }

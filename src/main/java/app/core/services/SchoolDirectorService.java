@@ -103,8 +103,11 @@ public School getSchoolDetails(int schoolId) throws SystemException {
 
     public void addStudent(Student student, int schoolId) throws SystemException {
         School school = schoolRepo.findById(schoolId).orElseThrow(()->new SystemException("בית ספר זה לא קיים במערכת"));
+        System.out.println(student+"-----000000000------");
+        System.out.println(school+"-----00cccccc000------");
+
         student.setSchool(school);
-        System.out.println(student);
+        System.out.println(student+"----------------");
         if(studentRepo.existsByStudentId(student.getStudentId())){
             throw new SystemException("תלמיד קיים במערכת, לא ניתן לבצע רישום נוסף");
         }
@@ -126,6 +129,9 @@ public School getSchoolDetails(int schoolId) throws SystemException {
         studentFromData.setNumClass(student.getNumClass());
         studentFromData.setPickupAddress(student.getPickupAddress());
         studentFromData.setNumBus(student.getNumBus());
+        studentFromData.setTravel(student.isTravel());
+        studentFromData.setHour(student.getHour());
+        studentFromData.setCause(student.getCause());
 
         studentRepo.saveAndFlush(studentFromData);
     }
@@ -155,12 +161,12 @@ public School getSchoolDetails(int schoolId) throws SystemException {
         return studentRepo.findAllByNumClassAndSchoolId(numClass, schoolId);
     }
 
-    public void setStudentToNotTravel(int studentId, int schoolId) throws SystemException {
+    public void setStudentToNotTravel(Student.Cause cause, int studentId, int schoolId) throws SystemException {
         Student student = studentRepo.findById(studentId).orElseThrow(() -> new SystemException("תלמיד לא קיים במערכת"));
         if (student.getSchool().getId() != schoolId){
             throw new SystemException("תלמיד לא קיים בבית ספר זה.");
         }
-        studentRepo.isNotTravel(studentId);
+        studentRepo.isNotTravel(cause, studentId);
     }
 
     public void setStudentToTravel(int studentId, int schoolId) throws SystemException {

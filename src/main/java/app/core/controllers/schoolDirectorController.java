@@ -80,6 +80,7 @@ public class schoolDirectorController {
     @PostMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "student")
     @ResponseStatus(HttpStatus.CREATED)
     public void addStudent(@RequestBody Student student, HttpServletRequest req) throws SystemException {
+     System.out.println(student);
         UserCredentials user = (UserCredentials) req.getAttribute("user");
         //        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
 //        student.setSchool(school);
@@ -121,10 +122,10 @@ public class schoolDirectorController {
     return schoolDirectorService.getAllStudentsByClass(numClass,user.getId());
     }
     @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "set-student-to-not-travel/{studentId}")
-    public void setStudentToNotTravel(@PathVariable int studentId, HttpServletRequest req) throws SystemException{
+    public void setStudentToNotTravel(@RequestParam Student.Cause cause ,@PathVariable int studentId, HttpServletRequest req) throws SystemException{
         UserCredentials user = (UserCredentials) req.getAttribute("user");
 //        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("בית הספר לא קיים במערכת"));
-    schoolDirectorService.setStudentToNotTravel(studentId, user.getId());
+    schoolDirectorService.setStudentToNotTravel(cause, studentId, user.getId());
     }
     @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "set-student-to-travel/{studentId}")
     public void setStudentToTravel( @PathVariable int studentId, HttpServletRequest req) throws SystemException {

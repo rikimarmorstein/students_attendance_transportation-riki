@@ -23,7 +23,11 @@ public class TeacherController {
 //    private TeacherRepo teacherRepo;
     @Autowired
     private TeacherService teacherService;
-
+    @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "update-teacher")
+    public void updateTeacher(@RequestBody Teacher teacher, HttpServletRequest req) throws SystemException {
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        teacherService.updateTeacher(teacher, user.getId());
+    }
     @GetMapping(headers = { HttpHeaders.AUTHORIZATION }, path = "teacher")
     public Teacher getTeacherDetails(HttpServletRequest req) throws SystemException {
         UserCredentials user = (UserCredentials) req.getAttribute("user");

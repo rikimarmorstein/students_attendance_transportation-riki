@@ -24,11 +24,30 @@ public class TeacherService extends  ClientService{
         if (teacherRepo.existsByPhoneAndPassword(userCredentials.getPhone(), userCredentials.getPassword())) {
             Teacher teacher = teacherRepo.findByPhoneAndPassword(userCredentials.getPhone(),
                     userCredentials.getPassword());
+
             userCredentials.setId(teacher.getId());
+
             userCredentials.setName(teacher.getFirstName()+ " "+ teacher.getLastName());
             return this.jwtUtil.generateToken(userCredentials);
         }
         throw new LoginException("טלפון וסיסמא שגויים!");
+    }
+
+    public void updateTeacher(Teacher teacher , int teacherId) throws SystemException {
+        System.out.println(teacher.getId());
+        Teacher teacherFromData = teacherRepo.findById(teacher.getId()).orElseThrow(()->new SystemException("מורה זה לא קיים במערכת"));
+//        if (schoolId != teacherFromData.getSchool().getId()){
+//            throw new SystemException("המורה לא נמצא בבית הספר הזה , לא ניתן לעדכן אותו");
+//        }
+        if(teacherRepo.existsByPhone(teacher.getPhone()) && !teacher.getPhone().equals(teacherFromData.getPhone())) {
+            throw new SystemException("מס' הטלפון קיים במערכת, לא ניתן לעדכן");
+        }
+        teacherFromData.setFirstName(teacher.getFirstName());
+        teacherFromData.setLastName(teacher.getLastName());
+        teacherFromData.setPhone(teacher.getPhone());
+        teacherFromData.setPassword(teacher.getPassword());
+        teacherFromData.setNumClass(teacher.getNumClass());
+        teacherRepo.saveAndFlush(teacherFromData);
     }
 
     public Teacher getTeacherDetails(int teacherId) throws SystemException {

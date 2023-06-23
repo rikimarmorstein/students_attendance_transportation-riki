@@ -4,6 +4,7 @@ import app.core.auth.UserCredentials;
 import app.core.entities.School;
 import app.core.entities.Student;
 import app.core.entities.Teacher;
+import app.core.entities.Transportation;
 import app.core.exception.SystemException;
 import app.core.repositories.SchoolRepo;
 import app.core.services.AdminService;
@@ -154,8 +155,25 @@ public class schoolDirectorController {
     public List<Student> getAllStudentsToTravelByBus(@RequestParam int numBus,HttpServletRequest req) throws SystemException {
         UserCredentials user = (UserCredentials) req.getAttribute("user");
 //        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("לא קיימים תלמידים במספר הסעה" + numBus));
-        return schoolDirectorService.getAllStudents(user.getId());
+        return schoolDirectorService.getAllStudentsToTravelByBus(numBus, user.getId());
     }
 
+    @PostMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "add-transportation")
+    public void addTransportation(@RequestBody Transportation transportation, HttpServletRequest req) throws SystemException {
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        schoolDirectorService.addTransportation(transportation, user.getId());
+    }
+    @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "update-transportation")
+    public void updateTransportation(@RequestBody Transportation transportation, HttpServletRequest req) throws SystemException {
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+        schoolDirectorService.addTransportation(transportation, user.getId());
+    }
+
+    @GetMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "all-transportation")
+    public List<Transportation> getAllTransportations  (HttpServletRequest req) throws SystemException {
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+//        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("לא קיימים תלמידים במספר הסעה" + numBus));
+        return schoolDirectorService.getAllTransportations(user.getId());
+    }
 
 }

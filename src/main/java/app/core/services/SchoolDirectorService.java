@@ -5,6 +5,7 @@ import app.core.auth.UserCredentials;
 import app.core.entities.School;
 import app.core.entities.Student;
 import app.core.entities.Teacher;
+import app.core.entities.Transportation;
 import app.core.exception.SystemException;
 import ch.qos.logback.core.joran.spi.ConsoleTarget;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,11 +104,7 @@ public School getSchoolDetails(int schoolId) throws SystemException {
 
     public void addStudent(Student student, int schoolId) throws SystemException {
         School school = schoolRepo.findById(schoolId).orElseThrow(()->new SystemException("בית ספר זה לא קיים במערכת"));
-        System.out.println(student+"-----000000000------");
-        System.out.println(school+"-----00cccccc000------");
-
         student.setSchool(school);
-        System.out.println(student+"----------------");
         if(studentRepo.existsByStudentId(student.getStudentId())){
             throw new SystemException("תלמיד קיים במערכת, לא ניתן לבצע רישום נוסף");
         }
@@ -193,10 +190,31 @@ public School getSchoolDetails(int schoolId) throws SystemException {
         studentRepo.whichHour(hour ,studentId);
     }
 
-    public List<Student> getAllStudentsToTravelByBus(int numBus){
+    public List<Student> getAllStudentsToTravelByBus(int numBus,int schoolId){
         return studentRepo.findAllByNumBus(numBus);
     }
 
+public void addTransportation(Transportation transportation,int schoolId) throws SystemException {
+    School school = schoolRepo.findById(schoolId).orElseThrow(()->new SystemException("בית ספר זה לא קיים במערכת"));
+    transportation.setSchool(school);
+        if(transportationRepo.existsByNumBusAndSchoolId(transportation.getNumBus(), schoolId)){
+            throw new SystemException("מספר הסעה קיים במערכת");
+        }
+        transportationRepo.save(transportation);
+}
+
+    public void updateTransportation(Transportation transportation,int schoolId) throws SystemException {
+        Transportation transportationFromData = transportationRepo.findById(transportation.getId()).orElseThrow(()->new SystemException("הסעה לא קיימת במערכת"));
+        if (schoolId != transportation.getSchool().getId()){
+            throw new SystemException("הסעה לא נמצא בבית הספר הזה , לא ניתן לעדכן אותו");
+        }
+        transportationFromData.setStations(transportation.getStations());
+        transportationFromData.setNumBus(transportation.getNumBus());
+
+        transportationRepo.save(transportation);}
 
 
+    public List<Transportation> getAllTransportations(int schoolId) throws SystemException {
+        return transportationRepo.findAllBySchoolId(schoolId);
+    }
 }

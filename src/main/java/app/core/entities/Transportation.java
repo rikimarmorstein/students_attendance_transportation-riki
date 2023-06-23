@@ -21,6 +21,10 @@ public class Transportation {
     private int id;
     @Column(nullable = false)
     private int numBus;
+    private String stations;
+    @ManyToOne
+    @JoinColumn(name="school_id")
+    private School school;
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "numBus")
 //    private List<Student> students;

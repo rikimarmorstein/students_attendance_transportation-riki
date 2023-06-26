@@ -10,4 +10,7 @@ public interface TransportationRepo extends JpaRepository<Transportation, Intege
 
     boolean existsByNumBusAndSchoolId(int numBus, int schoolId);
     List<Transportation> findAllBySchoolId(int schoolId);
+    Transportation findByNumBus(int numBus);
+    boolean existsByNumBus(int numBus);
+
 }

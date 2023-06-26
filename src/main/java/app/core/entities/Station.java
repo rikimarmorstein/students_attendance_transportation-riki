@@ -4,31 +4,28 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Table(name = "transportations")
-@ToString(exclude = "students")
+@Table(name = "stations")
+//@ToString(exclude = "students")
 @Builder
-public class Transportation {
-
+public class Station {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(nullable = false)
-    private int numBus;
+    private int numStation;
+    private String nameStation;
     @JsonIgnore
-    @OneToMany
-    private List<Station> stations;
+    @ManyToOne
+    @JoinColumn(name="transportation_id")
+    private Transportation transportation;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="school_id")
     private School school;
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "numBus")
-//    private List<Student> students;
 }

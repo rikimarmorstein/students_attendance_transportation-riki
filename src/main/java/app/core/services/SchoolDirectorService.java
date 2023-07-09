@@ -206,7 +206,9 @@ public void addTransportation(Transportation transportation,int schoolId) throws
             throw new SystemException("מספר הסעה לא קיים במערכת");
         }Transportation transportation  = transportationRepo.findByNumBus(numBus);
         station.setTransportation(transportation);
-        stationRepo.updateNumStation(station.getNumStation());
+//        stationRepo.updateNumStation(station.getNumStation());
+        stationRepo.updateNumStationBetweenlehagdil(station.getNumStation());
+
         stationRepo.save(station);
     }
 
@@ -220,7 +222,7 @@ public void addTransportation(Transportation transportation,int schoolId) throws
 //        station.setTransportation(transportation);
         Station stationFromData = stationRepo.findById(station.getId()).orElseThrow(()->new SystemException("תחנה לא קיימת במערכת"));
         stationFromData.setNameStation(station.getNameStation());
-
+        stationRepo.updateNumStation(station.getNumStation());
         stationRepo.save(station);
     }
 
@@ -237,5 +239,15 @@ public void addTransportation(Transportation transportation,int schoolId) throws
 
     public List<Transportation> getAllTransportations(int schoolId) throws SystemException {
         return transportationRepo.findAllBySchoolId(schoolId);
+    }
+//
+//    public void addStation(Station station) throws SystemException{
+//stationRepo.updateNumStationBetweenlehagdil(station.getNumStation());
+//        stationRepo.save(station);
+//    }
+
+    public void deleteStation(Station station, int schoolId) throws SystemException{
+        stationRepo.updateNumStationBetweenlehagdil(station.getNumStation());
+        stationRepo.save(station);
     }
 }

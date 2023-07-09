@@ -177,5 +177,11 @@ public class schoolDirectorController {
 //        School school = schoolRepo.findById(user.getId()).orElseThrow(() -> new SystemException("לא קיימים תלמידים במספר הסעה" + numBus));
         return schoolDirectorService.getAllTransportations(user.getId());
     }
+    @PutMapping(headers = {HttpHeaders.AUTHORIZATION}, path = "update-transportation")
+public void deleteStation(@RequestBody Station station ,HttpServletRequest req) throws SystemException{
+        UserCredentials user = (UserCredentials) req.getAttribute("user");
+ schoolDirectorService.deleteStation(station, user.getId());
+    }
+
 
 }
